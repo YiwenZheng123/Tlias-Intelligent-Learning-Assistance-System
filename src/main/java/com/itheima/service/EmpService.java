@@ -10,7 +10,7 @@ public interface EmpService {
 //    PageResult<Emp> page(Integer page, Integer pageSize,String name, Integer gender, LocalDate begin, LocalDate end);
 
     /**
-     * 分页查询
+     * Paginated query.
      */
     PageResult<Emp> page(EmpQueryParam empQueryParam);
 

@@ -8,15 +8,15 @@ import java.util.List;
 @Mapper
 public interface DeptMapper {
     /**
-     * 查询所有部门数据
+     * Query all department data.
      */
-    // 方式一： 手动结果映射
+    // Approach 1: manual result mapping.
 //    @Results({
 //            @Result(column = "create_time", property = "createTime"),
 //            @Result(column = "update_time", property = "updateTime")
 //    })
 
-    // 方式二： 起别名
+    // Approach 2: use column aliases.
     //@Select("select id, name, create_time createTime, update_time updateTime from dept order by update_time desc ")
     @Select("select id, name, create_time, update_time from dept order by update_time desc ")
     List<Dept> findAll();

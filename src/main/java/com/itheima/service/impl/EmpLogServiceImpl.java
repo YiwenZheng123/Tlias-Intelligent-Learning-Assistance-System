@@ -15,7 +15,7 @@ public class EmpLogServiceImpl implements EmpLogService {
     private EmpLogMapper empLogMapper;
 
 
-    // propagation = Propagation.REQUIRES_NEW 需要在一个新的事务中运行
+    // propagation = Propagation.REQUIRES_NEW runs this method in a new transaction.
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     @Override
     public void insertLog(EmpLog empLog) {

@@ -29,7 +29,7 @@ public class EmpController {
 //                       String name, Integer gender,
 //                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
 //                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
-//        log.info("分页查询: {},{},{},{},{},{}", page,pageSize,name,gender,begin,end);
+//        log.info("Paginated query: {},{},{},{},{},{}", page,pageSize,name,gender,begin,end);
 //
 //        PageResult<Emp> pageResult = empService.page(page, pageSize,  name, gender, begin, end);
 //        return Result.success(pageResult);
@@ -44,7 +44,7 @@ public class EmpController {
     }
 
     /**
-     * 新增员工
+     * Add an employee.
      * @return
      */
     @PostMapping
@@ -57,7 +57,7 @@ public class EmpController {
     }
 
     /**
-     * 删除员工
+     * Delete employees.
      */
     @DeleteMapping
     public Result delete(@RequestParam List<Integer> ids){
@@ -74,7 +74,7 @@ public class EmpController {
     }
 
     /**
-     * 修改员工
+     * Update an employee.
      */
     @PutMapping
     public Result update(@RequestBody Emp emp){

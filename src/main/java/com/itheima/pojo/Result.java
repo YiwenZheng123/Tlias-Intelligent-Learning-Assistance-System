@@ -5,14 +5,14 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 后端统一返回结果
+ * Unified backend response.
  */
 @Data
 public class Result {
 
-    private Integer code; //编码：1成功，0为失败
-    private String msg; //错误信息
-    private Object data; //数据
+    private Integer code; // Code: 1 for success, 0 for failure
+    private String msg; // Error message
+    private Object data; // Response data
 
     public static Result success() {
         Result result = new Result();

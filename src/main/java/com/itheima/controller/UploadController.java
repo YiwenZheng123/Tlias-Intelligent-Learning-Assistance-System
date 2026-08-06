@@ -15,12 +15,12 @@ import java.io.IOException;
 @RestController
 public class UploadController {
     /**
-     * 本地磁盘存储
+     * Local disk storage.
      */
 
 //    @PostMapping("/upload")
 //    public Result upload(String name, Integer age, MultipartFile file) {
-//        log.info("接收参数： {} {} {}", name,  age, file);
+//        log.info("Received parameters: {} {} {}", name,  age, file);
 //        return Result.success();
 //    }
     @Autowired
@@ -28,7 +28,7 @@ public class UploadController {
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws Exception {
         log.info("文件上传: {}", file.getOriginalFilename());
-        //将文件交给OSS存储管理
+        // Delegate file storage to OSS.
         String url = aliyunOSSOperator.upload(file.getBytes(), file.getOriginalFilename());
         log.info("文件上传OSS, url: {}", url);
         return Result.success(url);

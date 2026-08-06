@@ -15,10 +15,10 @@ public class ReportServiceImpl implements ReportService {
     private EmpMapper empMapper;
     @Override
     public JobOption getEmpJobData() {
-        // 1. 调用mapper接口， 获取统计数据
+        // 1. Call the mapper to get statistics.
         List<Map<String, Object>> list= empMapper.countEmpJobData();
 
-        // 2. 组装结果
+        // 2. Assemble the result.
         List<Object> jobList = list.stream().map(dataMap -> dataMap.get("pos")).toList();
         List<Object> dataList = list.stream().map(dataMap -> dataMap.get("num")).toList();
         return new JobOption(jobList, dataList);

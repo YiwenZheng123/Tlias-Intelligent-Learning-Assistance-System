@@ -8,18 +8,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
-员工信息
+Employee information mapper.
  */
 @Mapper
 public interface EmpMapper {
 //    /**
-//     * 查询总记录数
+//     * Query the total record count.
 //     */
 ////    @Select("SELECT count(*) from emp e left join dept d on e.dept_id = d.id")
 ////    public Long count();
 //
 //    /**
-//     * 分页查询
+//     * Paginated query.
 //     */
 //    @Select("select e.* , d.name deptName from emp e left join dept d on e.dept_id = d.id " +
 //            "order by e.update_time desc")
@@ -28,13 +28,13 @@ public interface EmpMapper {
     //@Select("select e.* , d.name deptName from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
 
     /**
-     *条件查询员工信息
+     * Query employee information by conditions.
      */
     public List<Emp> list(EmpQueryParam empQueryParam);
 
 
     /**
-     * 新增员工基本信息
+     * Add basic employee information.
      */
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)" +
@@ -44,7 +44,7 @@ public interface EmpMapper {
 
 
     /**
-     * 根据ID批量删除员工的基本信息
+     * Batch delete basic employee information by ID.
      */
     void deleteByIds(List<Integer> ids);
 
@@ -53,7 +53,7 @@ public interface EmpMapper {
     void updateById(Emp emp);
 
     /**
-     * 查询员工数量
+     * Query employee count.
      */
     @MapKey("pos")
     List<Map<String, Object>> countEmpJobData();

@@ -8,21 +8,21 @@ import java.util.List;
 
 @Data
 public class Emp {
-    private Integer id; //ID,主键
-    private String username; //用户名
-    private String password; //密码
-    private String name; //姓名
-    private Integer gender; //性别, 1:男, 2:女
-    private String phone; //手机号
-    private Integer job; //职位, 1:班主任,2:讲师,3:学工主管,4:教研主管,5:咨询师
-    private Integer salary; //薪资
-    private String image; //头像
-    private LocalDate entryDate; //入职日期
-    private Integer deptId; //关联的部门ID
-    private LocalDateTime createTime; //创建时间
-    private LocalDateTime updateTime; //修改时间
+    private Integer id; // ID, primary key
+    private String username; // Username
+    private String password; // Password
+    private String name; // Name
+    private Integer gender; // Gender, 1: male, 2: female
+    private String phone; // Phone number
+    private Integer job; // Job, 1: head teacher, 2: lecturer, 3: student affairs manager, 4: academic affairs manager, 5: consultant
+    private Integer salary; // Salary
+    private String image; // Avatar URL
+    private LocalDate entryDate; // Entry date
+    private Integer deptId; // Related department ID
+    private LocalDateTime createTime; // Creation time
+    private LocalDateTime updateTime; // Update time
 
-    //封装部门名称
+    // Department name for response display.
     private String deptName;
     private List<EmpExpr>  ExprList;
 }

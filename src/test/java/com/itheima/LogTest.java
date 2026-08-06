@@ -11,7 +11,7 @@ public class LogTest {
 
     @Test
     public void testLog(){
-        //System.out.println(LocalDateTime.now() + " : 开始计算...");
+        //System.out.println(LocalDateTime.now() + " : Start calculation...");
         log.debug("开始计算...");
         int sum = 0;
         int[] nums = {1, 5, 3, 2, 1, 4, 5, 4, 6, 7, 4, 34, 2, 23};
@@ -20,8 +20,8 @@ public class LogTest {
         }
         log.info("计算结果为： " + sum);
 
-        //System.out.println("计算结果为: "+sum);
-        //System.out.println(LocalDateTime.now() + "结束计算...");
+        //System.out.println("Calculation result: "+sum);
+        //System.out.println(LocalDateTime.now() + "End calculation...");
         log.debug("结束计算... ");
         log.trace("trace...");
         log.warn("warn...");

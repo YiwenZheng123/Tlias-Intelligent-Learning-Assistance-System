@@ -9,7 +9,7 @@
             #{id}
         </foreach>
     </delete>
-<!--根据ID更新员工的基本信息-->
+<!-- Update basic employee information by ID -->
     <update id="updateById">
         update emp
         <set>
@@ -89,7 +89,7 @@
             <result column="ee_job" property="job"/>
         </collection>
     </resultMap>
-<!--    根据ID查询员工基本信息及员工的工作经历信息-->
+<!-- Query basic employee information and work experience by ID -->
     <select id="getById" resultMap="empResultMap">
         select e.*,
                ee.id ee_id,

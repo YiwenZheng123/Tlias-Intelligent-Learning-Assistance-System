@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * 员工经历
+ * Employee work experience mapper.
  */
 @Mapper
 public interface EmpExprMapper {

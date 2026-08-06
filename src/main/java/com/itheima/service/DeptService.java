@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface DeptService {
     /**
-     *查询所有部门数据
+     * Query all department data.
      * @return
      */
     List<Dept> findAll();
 
     /**
      *
-     * 根据ID删除部门
+     * Delete department by ID.
      */
     void deleteById(Integer id);
 

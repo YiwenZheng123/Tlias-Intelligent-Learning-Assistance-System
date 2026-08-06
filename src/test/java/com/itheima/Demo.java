@@ -11,18 +11,18 @@ import java.nio.file.Files;
 public class Demo {
 
     public static void main(String[] args) throws Exception {
-        // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
+        // Set the endpoint according to the actual OSS region.
         String endpoint = "https://oss-cn-beijing.aliyuncs.com";
-        // 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET。
+        // Get credentials from environment variables. Make sure OSS_ACCESS_KEY_ID and OSS_ACCESS_KEY_SECRET are set before running.
         EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
-        // 填写Bucket名称，例如examplebucket。
+        // Set the bucket name.
         String bucketName = "java-ai-znhy";
-        // 填写Object完整路径，例如exampledir/exampleobject.txt。Object完整路径中不能包含Bucket名称。
+        // Set the full object path. Do not include the bucket name in the object path.
         String objectName = "001.jpg";
-        // 填写Bucket所在地域。以华东1（杭州）为例，Region填写为cn-hangzhou。
+        // Set the bucket region.
         String region = "cn-beijing";
 
-        // 创建OSSClient实例。
+        // Create the OSS client instance.
         ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
         clientBuilderConfiguration.setSignatureVersion(SignVersion.V4);
         OSS ossClient = OSSClientBuilder.create()

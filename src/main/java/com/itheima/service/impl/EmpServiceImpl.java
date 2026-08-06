@@ -27,49 +27,49 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public PageResult<Emp> page(EmpQueryParam empQueryParam) {
-        //原始分页查询
-//        // 1. 调用Mapper接口来查询总记录数
+        // Original pagination query.
+//        // 1. Call the mapper to query the total record count.
 //        Long total = empMapper.count();
 //
-//        // 2. 调用mapper接口来查询结果列表
+//        // 2. Call the mapper to query the result list.
 //        Integer start = (page - 1) * pageSize;
 //        List<Emp> rows = empMapper.list(start,pageSize);
-//        // 3. 封装结果
+//        // 3. Wrap the result.
 //        return new PageResult<Emp>(total, rows);
 
         /**
-         * pagehelper进行分页查询
+         * Use PageHelper for paginated queries.
          */
-        // 1.设置分页参数
+        // 1. Set pagination parameters.
         PageHelper.startPage(empQueryParam.getPage(),empQueryParam.getPageSize());
-        // 2. 执行查询
+        // 2. Execute the query.
         List<Emp> empList = empMapper.list(empQueryParam);
-        // 3. 解析查询结果并封装
+        // 3. Parse and wrap the query result.
         Page<Emp> p = (Page<Emp>) empList;
         return new PageResult<Emp>(p.getTotal(), p.getResult());
     }
 
-    @Transactional (rollbackFor = {Exception.class})// 事务管理 -默认出现运行时一场RuntimeException才会回滚
+    @Transactional (rollbackFor = {Exception.class})// Transaction management. By default, rollback occurs only for RuntimeException.
     @Override
     public void save(Emp emp) throws Exception {
         try {
-            // 1. 保存员工基本信息
+            // 1. Save basic employee information.
             emp.setCreateTime(LocalDateTime.now());
             emp.setUpdateTime(LocalDateTime.now());
             empMapper.insert(emp);
 
 
-            // 2. 保存员工工作经历信息
+            // 2. Save employee work experience records.
             List<EmpExpr> exprList = emp.getExprList();
             if(!CollectionUtils.isEmpty(exprList)){
-                //遍历集合，为empId赋值
+                // Iterate over the collection and set empId.
                 exprList.forEach(empExpr->{
                     empExpr.setEmpId(emp.getId());
                 });
                 empExprMapper.insertBatch(exprList);
             }
         } finally {
-            // 记录日志
+            // Record operation log.
             EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "新增员工: " + emp);
             empLogService.insertLog(empLog);
 
@@ -80,10 +80,10 @@ public class EmpServiceImpl implements EmpService {
     @Transactional(rollbackFor = {Exception.class})
     @Override
     public void delete(List<Integer> ids) {
-        // 1. 批量删除员工基本信息
+        // 1. Batch delete basic employee information.
         empMapper.deleteByIds(ids);
 
-        // 2. 批量删除员工的工作经历信息
+        // 2. Batch delete employee work experience records.
         empExprMapper.deleteByEmpIds(ids);
     }
 
@@ -94,14 +94,14 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public void update(Emp emp) {
-        // 1. 根据ID修改员工的基本信息
+        // 1. Update basic employee information by ID.
         emp.setUpdateTime(LocalDateTime.now());
         empMapper.updateById(emp);
 
-        // 2. 根据ID修改员工的工作经历信息
-        // 2.1 先删除工作经历信息
+        // 2. Update employee work experience records by ID.
+        // 2.1 Delete existing work experience records first.
         empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
-        // 2.2 再保存工作经历信息
+        // 2.2 Save new work experience records.
         List<EmpExpr> exprList = emp.getExprList();
         if (!CollectionUtils.isEmpty(exprList)) {
             exprList.forEach(empExpr -> {
