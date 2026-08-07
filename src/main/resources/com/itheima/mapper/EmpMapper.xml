@@ -118,6 +118,21 @@
             count(*) value
         from emp group by gender
     </select>
+    <select id="listOfAll" resultType="com.itheima.pojo.Emp">
+        select id,
+               username,
+               name,
+               password,
+               entry_date,
+               gender,
+               image,
+               job,
+               salary,
+               dept_id,
+               create_time,
+               update_time
+        from emp;
+    </select>
 
 
 </mapper>

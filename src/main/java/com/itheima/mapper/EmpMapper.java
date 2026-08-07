@@ -15,17 +15,17 @@ public interface EmpMapper {
 //    /**
 //     * Query the total record count.
 //     */
-////    @Select("SELECT count(*) from emp e left join dept d on e.dept_id = d.id")
-////    public Long count();
+//   @Select("SELECT count(*) from emp e left join dept d on e.dept_id = d.id")
+//   public Long count();
 //
 //    /**
 //     * Paginated query.
 //     */
-//    @Select("select e.* , d.name deptName from emp e left join dept d on e.dept_id = d.id " +
+//    @Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id " +
 //            "order by e.update_time desc")
 //    public List<Emp> list(Integer start, Integer pageSize);
 
-    //@Select("select e.* , d.name deptName from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
+    //@Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
 
     /**
      * Query employee information by conditions.
@@ -60,4 +60,6 @@ public interface EmpMapper {
 
     @MapKey("name")
     List<Map<String, Object>> countEmpGenderData();
+
+    List<Emp> listOfAll();
 }
