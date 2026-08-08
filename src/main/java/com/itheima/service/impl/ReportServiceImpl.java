@@ -1,6 +1,7 @@
 package com.itheima.service.impl;
 
 import com.itheima.mapper.EmpMapper;
+import com.itheima.pojo.ClazzOption;
 import com.itheima.pojo.JobOption;
 import com.itheima.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,20 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Map<String, Object>> getEmpGenderData() {
         return empMapper.countEmpGenderData();
+    }
+
+    @Override
+    public List<Map<String, Object>> getStudentDegreeData() {
+        List<Map<String, Object>> list = empMapper.countStudentDegreeData();
+        return list;
+    }
+
+    @Override
+    public ClazzOption getStudentCountData() {
+        List<Map<String, Object>> list = empMapper.countStudentCountData();
+        List<Object> clazzList = list.stream().map(dataMap -> dataMap.get("class")).toList();
+        List<Object> dataList = list.stream().map(dataMap -> dataMap.get("num")).toList();
+        return new ClazzOption(clazzList, dataList);
+
     }
 }

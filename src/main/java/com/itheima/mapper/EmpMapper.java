@@ -62,4 +62,8 @@ public interface EmpMapper {
     List<Map<String, Object>> countEmpGenderData();
 
     List<Emp> listOfAll();
+
+    List<Map<String, Object>> countStudentDegreeData();
+
+    List<Map<String, Object>> countStudentCountData();
 }

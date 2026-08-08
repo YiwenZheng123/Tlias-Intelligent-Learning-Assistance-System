@@ -101,17 +101,7 @@
         from emp e left join emp_expr ee on e.id = ee.emp_id where e.id = #{id};
 
     </select>
-    <select id="countEmpJobData" resultType="java.util.Map">
-        select
-            (case when job=1 then '班主任'
-                  when job=2 then '讲师'
-                  when job=3 then '学工主管'
-                  when job=4 then '教研主管'
-                  when job=5 then '咨询师'
-                  else '其他职位' end) pos,
-            count(*) num
-        from emp group by job order by num
-    </select>
+
     <select id="countEmpGenderData" resultType="java.util.Map">
         select
             if(gender = 1, '男性员工', '女性员工') name,
@@ -132,6 +122,37 @@
                create_time,
                update_time
         from emp;
+    </select>
+
+    <select id="countEmpJobData" resultType="java.util.Map">
+        select
+            (case when job=1 then '班主任'
+                  when job=2 then '讲师'
+                  when job=3 then '学工主管'
+                  when job=4 then '教研主管'
+                  when job=5 then '咨询师'
+                  else '其他职位' end) pos,
+            count(*) num
+        from emp group by job order by num
+    </select>
+
+    <select id="countStudentDegreeData" resultType="java.util.Map">
+        select
+            (case when degree=1 then '初中'
+                  when degree=2 then '高中'
+                  when degree=3 then '大专'
+                  when degree=4 then '本科'
+                  when degree=5 then '硕士'
+                  when degree=6 then '博士'
+                  else '其他学历' end) name,
+            count(*) value
+        from student group by degree order by value
+    </select>
+    <select id="countStudentCountData" resultType="java.util.Map">
+        select
+            c.name class,
+            count(*) num
+        from student s left join clazz c on s.clazz_id = c.id group by class order by num
     </select>
 
 
