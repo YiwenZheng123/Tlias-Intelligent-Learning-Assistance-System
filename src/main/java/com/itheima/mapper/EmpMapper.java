@@ -66,4 +66,6 @@ public interface EmpMapper {
     List<Map<String, Object>> countStudentDegreeData();
 
     List<Map<String, Object>> countStudentCountData();
+
+    Emp selectByUsernameAndPassword(Emp emp);
 }

@@ -154,6 +154,11 @@
             count(*) num
         from student s left join clazz c on s.clazz_id = c.id group by class order by num
     </select>
+    <select id="selectByUsernameAndPassword" resultType="com.itheima.pojo.Emp">
+        SELECT id, username, name
+        from emp
+        where username = #{username} and password = #{password}
+    </select>
 
 
 </mapper>
