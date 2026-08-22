@@ -1,6 +1,6 @@
 # Tlias Intelligent Learning Assistance System
 
-Tlias Intelligent Learning Assistance System is a Spring Boot based backend service for managing departments, employees, employee statistics, and file uploads. The project is currently under development and uses MyBatis with MySQL for persistence.
+Tlias Intelligent Learning Assistance System is a Spring Boot based backend service for teaching management. It provides APIs for departments, employees, classes, students, login authentication, operation logs, statistics reports, and file uploads. The project uses MyBatis with MySQL for persistence.
 
 ## Tech Stack
 
@@ -12,9 +12,16 @@ Tlias Intelligent Learning Assistance System is a Spring Boot based backend serv
 - PageHelper
 - Lombok
 - Aliyun OSS SDK
+- JWT
 - Maven
 
 ## Features
+
+- Login and authentication
+  - Employee login through `/login`
+  - Generate JWT after successful login
+  - JWT parsing utility in `JwtUtils`
+  - Token validation implementations are available in `TokenFilter` and `TokenInterceptor`
 
 - Department management
   - List departments
@@ -30,10 +37,33 @@ Tlias Intelligent Learning Assistance System is a Spring Boot based backend serv
   - Update employee
   - Batch delete employees
   - Employee work experience persistence
+  - Query all employees for selector/list usage
+  - Operation log persistence when adding employees
+
+- Class management
+  - Paginated class query
+  - Add class
+  - Query class by ID
+  - Update class
+  - Delete class
+  - Query all classes for selector/list usage
+
+- Student management
+  - Paginated student query
+  - Add student
+  - Query student by ID
+  - Update student
+  - Batch delete students
+  - Update violation score
 
 - Report APIs
   - Employee job distribution
   - Employee gender distribution
+  - Student degree distribution
+  - Student count by class
+
+- Operation logs
+  - Paginated employee operation log query
 
 - File upload
   - Upload files through `/upload`
@@ -44,16 +74,20 @@ Tlias Intelligent Learning Assistance System is a Spring Boot based backend serv
 
 ```text
 src/main/java/com/itheima
+  config/       Spring MVC configuration
   controller/   REST API controllers
   exception/    Global exception handling
+  filter/       Servlet filters, including TokenFilter
+  interceptor/  Spring MVC interceptors, including TokenInterceptor
   mapper/       MyBatis mapper interfaces
   pojo/         Entity, DTO, and response classes
   service/      Service interfaces
   service/impl/ Service implementations
-  utils/        Aliyun OSS utilities
+  utils/        Aliyun OSS and JWT utilities
 
 src/main/resources
   application.yml
+  application-local.yml
   logback.xml
   com/itheima/mapper/ MyBatis XML mapper files
   static/upload.html
@@ -80,6 +114,29 @@ src/main/resources
 | GET | `/emps/{id}` | Get employee by ID |
 | PUT | `/emps` | Update employee |
 | DELETE | `/emps?ids=1,2,3` | Batch delete employees |
+| GET | `/emps/list` | List all employees |
+
+### Class APIs
+
+| Method | Path | Description |
+| --- | --- | --- |
+| GET | `/clazzs` | Paginated class query |
+| POST | `/clazzs` | Add a class |
+| GET | `/clazzs/{id}` | Get class by ID |
+| PUT | `/clazzs` | Update class |
+| DELETE | `/clazzs/{id}` | Delete class |
+| GET | `/clazzs/list` | List all classes |
+
+### Student APIs
+
+| Method | Path | Description |
+| --- | --- | --- |
+| GET | `/students` | Paginated student query |
+| POST | `/students` | Add a student |
+| GET | `/students/{id}` | Get student by ID |
+| PUT | `/students` | Update student |
+| DELETE | `/students/{ids}` | Batch delete students |
+| PUT | `/students/violation/{id}/{score}` | Update student violation score |
 
 ### Report APIs
 
@@ -87,12 +144,41 @@ src/main/resources
 | --- | --- | --- |
 | GET | `/report/empJobData` | Get employee job statistics |
 | GET | `/report/empGenderData` | Get employee gender statistics |
+| GET | `/report/studentDegreeData` | Get student degree statistics |
+| GET | `/report/studentCountData` | Get student count statistics by class |
+
+### Login API
+
+| Method | Path | Description |
+| --- | --- | --- |
+| POST | `/login` | Login with employee username and password, and return login information with JWT |
+
+### Log API
+
+| Method | Path | Description |
+| --- | --- | --- |
+| GET | `/log/page` | Paginated employee operation log query |
 
 ### Upload API
 
 | Method | Path | Description |
 | --- | --- | --- |
 | POST | `/upload` | Upload file to Aliyun OSS |
+
+## Authentication
+
+After successful login, `/login` returns a token in the login result. Requests that require authentication should send the token in the request header:
+
+```text
+token: your_jwt_token
+```
+
+The project contains two JWT validation implementations:
+
+- `TokenFilter`: Servlet filter based token validation. It allows login requests and validates the `token` request header for other requests.
+- `TokenInterceptor`: Spring MVC interceptor based token validation. It validates the `token` request header before controller methods are invoked.
+
+At the moment, both implementations are kept in the codebase as optional approaches. Their annotations or registration code are commented out, so enable only the approach you want to use.
 
 ## Configuration
 
@@ -120,6 +206,13 @@ spring:
     username: root
 ```
 
+The application also configures:
+
+- Multipart upload size: `10MB`
+- MyBatis underscore-to-camel-case mapping
+- JDBC transaction debug logging
+- Aliyun OSS endpoint, bucket name, and region
+
 ## Run Locally
 
 Make sure Java 17 and Maven are available.
@@ -146,4 +239,5 @@ http://localhost:8080
 
 - `target/`, `logs/`, `.idea/`, and local environment files are ignored by Git.
 - Do not commit real database passwords or cloud access keys.
-- The project is still incomplete and intended for continued development.
+- `TokenFilter` and `TokenInterceptor` are the current token validation implementations; demo filter/interceptor classes are only examples.
+- The project is still intended for continued development.
